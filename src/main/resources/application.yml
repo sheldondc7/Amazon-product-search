@@ -1,0 +1,26 @@
+cloud:
+  aws:
+    credentials:
+      access-key: # my access key
+      secret-key: # my secret key
+    region:
+      static: eu-central-1
+    stack:
+      auto: false
+
+application:
+  bucket: 
+    name: sellics-casestudy-organic
+
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+
