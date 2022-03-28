@@ -20,7 +20,22 @@ spring:
       file-size-threshold: 2MB
       max-file-size: 5MB
       max-request-size: 10MB
-
+  datasource:
+    url: jdbc:h2:mem:test
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      properties:
+      hibernate:
+        jdbc:
+          batch_size = 500
+          order_inserts=true
+  h2:
+    console:
+      enabled: true
+    
 server:
   port: 8080
 

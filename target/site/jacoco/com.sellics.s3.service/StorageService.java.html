@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StorageService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sellics-Sheldon</a> &gt; <a href="index.source.html" class="el_package">com.sellics.s3.service</a> &gt; <span class="el_source">StorageService.java</span></div><h1>StorageService.java</h1><pre class="source lang-java linenums">package com.sellics.s3.service;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.util.IOUtils;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="fc" id="L12">@Slf4j</span>
+<span class="fc" id="L13">public class StorageService {</span>
+
+  @Value(&quot;${application.bucket.name}&quot;)
+  private String bucketName;
+
+  @Autowired private AmazonS3 s3Client;
+
+  public byte[] downloadFile(final String fileName) {
+<span class="nc" id="L21">    var s3Object = s3Client.getObject(bucketName, fileName);</span>
+<span class="nc" id="L22">    var inputStream = s3Object.getObjectContent();</span>
+    try {
+<span class="nc" id="L24">      var content = IOUtils.toByteArray(inputStream);</span>
+<span class="nc" id="L25">      return content;</span>
+<span class="nc" id="L26">    } catch (final IOException e) {</span>
+<span class="nc" id="L27">      log.error(&quot;Error : &quot;, e);</span>
+    }
+<span class="nc" id="L29">    return null;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

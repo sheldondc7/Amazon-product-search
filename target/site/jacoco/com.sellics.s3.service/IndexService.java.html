@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IndexService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sellics-Sheldon</a> &gt; <a href="index.source.html" class="el_package">com.sellics.s3.service</a> &gt; <span class="el_source">IndexService.java</span></div><h1>IndexService.java</h1><pre class="source lang-java linenums">package com.sellics.s3.service;
+
+import com.sellics.s3.model.AggregatedRankByAsinResponse;
+import com.sellics.s3.model.AggregatedRankByKeywordResponse;
+import com.sellics.s3.model.IndividualRankResponse;
+import com.sellics.s3.repository.SellicsRepository;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="fc" id="L15">@Slf4j</span>
+<span class="fc" id="L16">public class IndexService {</span>
+
+  @Autowired private SellicsRepository repository;
+
+  public List&lt;IndividualRankResponse&gt; getIndividualRankForAsin(
+      final String keyword, final String asin) {
+
+<span class="nc" id="L23">    final List&lt;IndividualRankResponse&gt; listResponse = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L25">    final var list = repository.getIndividualRankForAsin(keyword, asin);</span>
+<span class="nc bnc" id="L26" title="All 4 branches missed.">    if (list != null &amp;&amp; !list.isEmpty()) {</span>
+<span class="nc" id="L27">      log.info(&quot;list has values.&quot;);</span>
+<span class="nc" id="L28">      list.forEach(</span>
+<span class="nc" id="L29">          obj -&gt; {</span>
+<span class="nc" id="L30">            final var timestamp = Long.valueOf(obj.getTimestamp());</span>
+<span class="nc" id="L31">            final var date = new Date(timestamp);</span>
+
+<span class="nc" id="L33">            final var response = new IndividualRankResponse();</span>
+<span class="nc" id="L34">            response.setId(obj.getId());</span>
+<span class="nc" id="L35">            response.setAsin(obj.getAsin());</span>
+<span class="nc" id="L36">            response.setIndividualRank(obj.getRank());</span>
+<span class="nc" id="L37">            response.setKeyword(obj.getKeyword());</span>
+<span class="nc" id="L38">            response.setDate(date);</span>
+<span class="nc" id="L39">            listResponse.add(response);</span>
+<span class="nc" id="L40">          });</span>
+    }
+<span class="nc" id="L42">    return new ArrayList&lt;&gt;(listResponse);</span>
+  }
+
+  public List&lt;AggregatedRankByKeywordResponse&gt; getAggregatedRankByKeyword(final String keyword) {
+<span class="nc" id="L46">    List&lt;AggregatedRankByKeywordResponse&gt; listResponse = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L48">    final var list = repository.getAggregatedRankByKeyword(keyword);</span>
+<span class="nc bnc" id="L49" title="All 4 branches missed.">    if (list != null &amp;&amp; !list.isEmpty()) {</span>
+<span class="nc" id="L50">      log.info(&quot;list has values.&quot;);</span>
+<span class="nc" id="L51">      list.forEach(</span>
+<span class="nc" id="L52">          obj -&gt; {</span>
+<span class="nc" id="L53">            final var timestamp = Long.valueOf(obj.getTimestamp());</span>
+<span class="nc" id="L54">            final var date = new Date(timestamp);</span>
+
+<span class="nc" id="L56">            final var response = new AggregatedRankByKeywordResponse();</span>
+<span class="nc" id="L57">            response.setKeyword(obj.getKeyword());</span>
+<span class="nc" id="L58">            response.setSum(obj.getSum());</span>
+<span class="nc" id="L59">            response.setDate(date);</span>
+<span class="nc" id="L60">            listResponse.add(response);</span>
+<span class="nc" id="L61">          });</span>
+    }
+<span class="nc" id="L63">    return new ArrayList&lt;&gt;(listResponse);</span>
+  }
+
+  public List&lt;AggregatedRankByAsinResponse&gt; getAggregatedRankByAsin(final String asin) {
+
+<span class="nc" id="L68">    final List&lt;AggregatedRankByAsinResponse&gt; listResponse = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L70">    final var list = repository.getAggregatedRankByAsin(asin);</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">    if (list != null &amp;&amp; !list.isEmpty()) {</span>
+<span class="nc" id="L72">      log.info(&quot;list has values.&quot;);</span>
+<span class="nc" id="L73">      list.forEach(</span>
+<span class="nc" id="L74">          obj -&gt; {</span>
+<span class="nc" id="L75">            final var timestamp = Long.valueOf(obj.getTimestamp());</span>
+<span class="nc" id="L76">            final var date = new Date(timestamp);</span>
+
+<span class="nc" id="L78">            final var response = new AggregatedRankByAsinResponse();</span>
+<span class="nc" id="L79">            response.setAsin(obj.getAsin());</span>
+<span class="nc" id="L80">            response.setSum(obj.getSum());</span>
+<span class="nc" id="L81">            response.setTimestamp(date);</span>
+
+<span class="nc" id="L83">            listResponse.add(response);</span>
+<span class="nc" id="L84">          });</span>
+    }
+<span class="nc" id="L86">    return new ArrayList&lt;&gt;(listResponse);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
