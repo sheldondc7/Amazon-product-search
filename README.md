@@ -1,8 +1,6 @@
-# Sellics Candidate task
-
+# Amazon sample product search
 ## Task summary
 
-A model input data-set, obtained by recording the rankings over time for a small number of products and keywords is made available as a .csv file in a public S3 bucket under s3://sellics-casestudy-organic/public/case-keywords.csv. In order to connect to S3 programmatically, you will need to be authenticated against AWS (any valid credentials will do), the bucket resides in eu-central-1. Your task is to design and implement a system that ingests and processes this file, and presents the results through a smart ranking index REST API that help retailers make sense of this data as follows:
 • a time series containing the individual ranks for an ASIN, for a certain keyword
 • a time series containing the aggregated ranks for all ASINs for a certain keyword
 • a time series containing the aggregated ranks of all keywords for a certain ASIN
